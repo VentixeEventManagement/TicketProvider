@@ -11,7 +11,7 @@ using TicketProvider.Data.Contexts;
 namespace TicketProvider.Migrations
 {
     [DbContext(typeof(TicketContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    partial class TicketContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
@@ -22,7 +22,7 @@ namespace TicketProvider.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("TicketProvider.Data.Entities.EventEntity", b =>
+            modelBuilder.Entity("TicketProvider.Data.Entities.TicketEntity", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -30,34 +30,24 @@ namespace TicketProvider.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("EndDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Location")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("StartDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("TicketAmount")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("TicketPrice")
+                    b.Property<int>("EventId")
                         .HasColumnType("int");
+
+                    b.Property<string>("HolderEmail")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("HolderName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<DateTime?>("PurchaseDate")
+                        .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Events");
+                    b.ToTable("Tickets");
                 });
 #pragma warning restore 612, 618
         }
