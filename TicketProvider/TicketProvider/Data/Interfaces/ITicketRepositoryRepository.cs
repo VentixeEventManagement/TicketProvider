@@ -9,6 +9,6 @@ namespace TicketProvider.Data.Interfaces
     /// </summary>
     public interface ITicketRepository : IBaseRepository<TicketEntity>
     {
-        // Add event-specific data access methods here if needed in the future.
+        // Add Ticket-specific data access methods here if needed in the future.
     }
 }
