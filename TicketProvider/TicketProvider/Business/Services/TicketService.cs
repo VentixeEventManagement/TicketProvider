@@ -1,5 +1,4 @@
-﻿using System.Linq.Expressions;
-using TicketProvider.Business.Factories;
+﻿using TicketProvider.Business.Factories;
 using TicketProvider.Business.Interfaces;
 using TicketProvider.Business.Models;
 using TicketProvider.Data.Entities;
@@ -8,107 +7,104 @@ using TicketProvider.Data.Interfaces;
 namespace TicketProvider.Business.Services
 {
     /// <summary>
-    /// Provides business logic for managing events, including creating, retrieving, updating, and deleting events.
+    /// Provides business logic for managing tickets, including creating, retrieving, updating, and deleting tickets.
     /// </summary>
     public class TicketService : ITicketService
     {
-        private readonly ITicketRepository _eventRepository;
+        private readonly ITicketRepository _ticketRepository;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="TicketService"/> class.
         /// </summary>
-        /// <param name="eventRepository">The repository used to access event data.</param>
-        public TicketService(ITicketRepository eventRepository)
+        /// <param name="ticketRepository">The repository used to access ticket data.</param>
+        public TicketService(ITicketRepository ticketRepository)
         {
-            _eventRepository = eventRepository;
+            _ticketRepository = ticketRepository;
         }
 
         /// <summary>
-        /// Retrieves all events from the data store.
+        /// Retrieves all tickets from the data store.
         /// </summary>
         /// <returns>
-        /// A task that represents the asynchronous operation. The task result contains a collection of all events.
+        /// A task that represents the asynchronous operation. The task result contains a collection of all tickets.
         /// </returns>
-        public async Task<IEnumerable<Ticket>> GetEventsAsync()
+        public async Task<IEnumerable<Ticket>> GetTicketsAsync()
         {
-            var entities = await _eventRepository.GetAllAsync();
-            var events = entities.Select(TicketFactory.Create);
-            return events!;
+            var entities = await _ticketRepository.GetAllAsync();
+            var tickets = entities.Select(TicketFactory.Create);
+            return tickets!;
         }
 
         /// <summary>
-        /// Retrieves a specific event by its unique identifier.
+        /// Retrieves a specific ticket by its unique identifier.
         /// </summary>
-        /// <param name="eventId">The unique identifier of the event to retrieve.</param>
+        /// <param name="ticketId">The unique identifier of the ticket to retrieve.</param>
         /// <returns>
-        /// A task that represents the asynchronous operation. The task result contains the event if found; otherwise, null.
+        /// A task that represents the asynchronous operation. The task result contains the ticket if found; otherwise, null.
         /// </returns>
-        public async Task<Ticket?> GetEventByIdAsync(int eventId)
+        public async Task<Ticket?> GetTicketByIdAsync(int ticketId)
         {
-            var eventobj = await _eventRepository.GetAsync(p => p.Id == eventId);
-            if (eventobj == null)
-                return null!;
-            return TicketFactory.Create(eventobj)!;
+            var ticketEntity = await _ticketRepository.GetAsync(p => p.Id == ticketId);
+            if (ticketEntity == null)
+                return null;
+            return TicketFactory.Create(ticketEntity);
         }
 
         /// <summary>
-        /// Creates a new event using the provided registration data.
+        /// Creates a new ticket using the provided registration data.
         /// </summary>
-        /// <param name="eventData">The data for the event to be created.</param>
+        /// <param name="ticketData">The data for the ticket to be created.</param>
         /// <returns>
-        /// A task that represents the asynchronous operation. The task result contains true if the event was created successfully; otherwise, false.
+        /// A task that represents the asynchronous operation. The task result contains true if the ticket was created successfully; otherwise, false.
         /// </returns>
-        public async Task<bool> CreateEventAsync(TicketRegistrationModel eventData)
+        public async Task<bool> CreateTicketAsync(TicketRegistrationModel ticketData)
         {
-            var eventEntity = TicketFactory.Create(eventData);
+            var ticketEntity = TicketFactory.Create(ticketData);
 
-            if (eventEntity == null)
+            if (ticketEntity == null)
                 return false;
 
-            var result = await _eventRepository.AddAsync(eventEntity);
+            var result = await _ticketRepository.AddAsync(ticketEntity);
             return result;
         }
 
         /// <summary>
-        /// Updates an existing event with new data.
+        /// Updates an existing ticket with new data.
         /// </summary>
-        /// <param name="eventId">The unique identifier of the event to update.</param>
-        /// <param name="newEventData">The new data for the event.</param>
+        /// <param name="ticketId">The unique identifier of the ticket to update.</param>
+        /// <param name="newTicketData">The new data for the ticket.</param>
         /// <returns>
-        /// A task that represents the asynchronous operation. The task result contains true if the event was updated successfully; otherwise, false.
+        /// A task that represents the asynchronous operation. The task result contains true if the ticket was updated successfully; otherwise, false.
         /// </returns>
-        public async Task<bool> EditEventAsync(int eventId, TicketRegistrationModel newEventData)
+        public async Task<bool> EditTicketAsync(int ticketId, TicketRegistrationModel newTicketData)
         {
-            var targetEvent = await _eventRepository.GetAsync(e => e.Id == eventId);
-            if (targetEvent == null)
+            var targetTicket = await _ticketRepository.GetAsync(t => t.Id == ticketId);
+            if (targetTicket == null)
                 return false;
 
-            targetEvent.Name = newEventData.Name;
-            targetEvent.Description = newEventData.Description;
-            targetEvent.StartDate = newEventData.StartDate;
-            targetEvent.EndDate = newEventData.EndDate;
-            targetEvent.Location = newEventData.Location;
-            targetEvent.TicketPrice = newEventData.TicketPrice;
-            targetEvent.TicketAmount = newEventData.TicketAmount;
+            targetTicket.EventId = newTicketData.EventId;
+            targetTicket.HolderName = newTicketData.HolderName;
+            targetTicket.HolderEmail = newTicketData.HolderEmail;
+            targetTicket.Price = newTicketData.Price ?? targetTicket.Price;
 
-            bool result = await _eventRepository.UpdateAsync(targetEvent);
+            bool result = await _ticketRepository.UpdateAsync(targetTicket);
             return result;
         }
 
         /// <summary>
-        /// Deletes an event with the specified unique identifier.
+        /// Deletes a ticket with the specified unique identifier.
         /// </summary>
-        /// <param name="eventId">The unique identifier of the event to delete.</param>
+        /// <param name="ticketId">The unique identifier of the ticket to delete.</param>
         /// <returns>
-        /// A task that represents the asynchronous operation. The task result contains true if the event was deleted successfully; otherwise, false.
+        /// A task that represents the asynchronous operation. The task result contains true if the ticket was deleted successfully; otherwise, false.
         /// </returns>
-        public async Task<bool> DeleteEventAsync(int eventId)
+        public async Task<bool> DeleteTicketAsync(int ticketId)
         {
-            var targetEvent = await _eventRepository.GetAsync(e => e.Id == eventId);
-            if (targetEvent == null)
+            var targetTicket = await _ticketRepository.GetAsync(t => t.Id == ticketId);
+            if (targetTicket == null)
                 return false;
 
-            bool result = await _eventRepository.RemoveAsync(targetEvent);
+            bool result = await _ticketRepository.RemoveAsync(targetTicket);
             return result;
         }
     }

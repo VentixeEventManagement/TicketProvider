@@ -3,53 +3,53 @@
 namespace TicketProvider.Business.Interfaces
 {
     /// <summary>
-    /// Defines methods for managing events in the system.
+    /// Defines methods for managing tickets in the system.
     /// </summary>
     public interface ITicketService
     {
         /// <summary>
-        /// Creates a new event using the provided registration data.
+        /// Creates a new ticket using the provided registration data.
         /// </summary>
-        /// <param name="eventData">The data for the event to be created.</param>
+        /// <param name="ticketData">The data for the ticket to be created.</param>
         /// <returns>
-        /// A task that represents the asynchronous operation. The task result contains true if the event was created successfully; otherwise, false.
+        /// A task that represents the asynchronous operation. The task result contains true if the ticket was created successfully; otherwise, false.
         /// </returns>
-        Task<bool> CreateEventAsync(TicketRegistrationModel eventData);
+        Task<bool> CreateTicketAsync(TicketRegistrationModel ticketData);
 
         /// <summary>
-        /// Deletes an event with the specified unique identifier.
+        /// Deletes a ticket with the specified unique identifier.
         /// </summary>
-        /// <param name="eventId">The unique identifier of the event to delete.</param>
+        /// <param name="ticketId">The unique identifier of the ticket to delete.</param>
         /// <returns>
-        /// A task that represents the asynchronous operation. The task result contains true if the event was deleted successfully; otherwise, false.
+        /// A task that represents the asynchronous operation. The task result contains true if the ticket was deleted successfully; otherwise, false.
         /// </returns>
-        Task<bool> DeleteEventAsync(int eventId);
+        Task<bool> DeleteTicketAsync(int ticketId);
 
         /// <summary>
-        /// Updates an existing event with new data.
+        /// Updates an existing ticket with new data.
         /// </summary>
-        /// <param name="eventId">The unique identifier of the event to update.</param>
-        /// <param name="newEventData">The new data for the event.</param>
+        /// <param name="ticketId">The unique identifier of the ticket to update.</param>
+        /// <param name="newTicketData">The new data for the ticket.</param>
         /// <returns>
-        /// A task that represents the asynchronous operation. The task result contains true if the event was updated successfully; otherwise, false.
+        /// A task that represents the asynchronous operation. The task result contains true if the ticket was updated successfully; otherwise, false.
         /// </returns>
-        Task<bool> EditEventAsync(int eventId, TicketRegistrationModel newEventData);
+        Task<bool> EditTicketAsync(int ticketId, TicketRegistrationModel newTicketData);
 
         /// <summary>
-        /// Retrieves a specific event by its unique identifier.
+        /// Retrieves a specific ticket by its unique identifier.
         /// </summary>
-        /// <param name="eventId">The unique identifier of the event to retrieve.</param>
+        /// <param name="ticketId">The unique identifier of the ticket to retrieve.</param>
         /// <returns>
-        /// A task that represents the asynchronous operation. The task result contains the event if found; otherwise, null.
+        /// A task that represents the asynchronous operation. The task result contains the ticket if found; otherwise, null.
         /// </returns>
-        Task<Ticket?> GetEventByIdAsync(int eventId);
+        Task<Ticket?> GetTicketByIdAsync(int ticketId);
 
         /// <summary>
-        /// Retrieves all events in the system.
+        /// Retrieves all tickets in the system.
         /// </summary>
         /// <returns>
-        /// A task that represents the asynchronous operation. The task result contains a collection of all events.
+        /// A task that represents the asynchronous operation. The task result contains a collection of all tickets.
         /// </returns>
-        Task<IEnumerable<Ticket>> GetEventsAsync();
+        Task<IEnumerable<Ticket>> GetTicketsAsync();
     }
 }
