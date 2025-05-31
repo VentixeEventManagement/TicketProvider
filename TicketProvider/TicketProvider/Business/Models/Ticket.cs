@@ -35,9 +35,5 @@
         /// </summary>
         public decimal Price { get; set; }
 
-        /// <summary>
-        /// The status of the ticket (e.g., Available, Sold, Cancelled).
-        /// </summary>
-        public string Status { get; set; } = "Available";
     }
 }

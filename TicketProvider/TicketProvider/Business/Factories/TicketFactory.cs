@@ -4,31 +4,28 @@ using TicketProvider.Data.Entities;
 namespace TicketProvider.Business.Factories
 {
     /// <summary>
-    /// Provides factory methods for creating Event and EventEntity objects.
+    /// Provides factory methods for creating Ticket and TicketEntity objects.
     /// </summary>
     public static class TicketFactory
     {
         /// <summary>
-        /// Creates an EventEntity from an EventRegistrationModel.
+        /// Creates a TicketEntity from a TicketRegistrationModel.
         /// </summary>
-        /// <param name="form">The registration model containing event data.</param>
-        /// <returns>A new EventEntity or null if the input is null.</returns>
+        /// <param name="form">The registration model containing ticket data.</param>
+        /// <returns>A new TicketEntity or null if the input is null.</returns>
         public static TicketEntity? Create(TicketRegistrationModel form) => form == null ? null : new()
         {
-            Name = form.Name,
-            Description = form.Description,
-            StartDate = form.StartDate,
-            EndDate = form.EndDate,
-            Location = form.Location,
-            TicketPrice = form.TicketPrice,
-            TicketAmount = form.TicketAmount
+            EventId = form.EventId,
+            HolderName = form.HolderName,
+            HolderEmail = form.HolderEmail,
+            Price = form.Price ?? 0m,
         };
 
         /// <summary>
-        /// Creates an Event model from an EventEntity.
+        /// Creates a Ticket model from a TicketEntity.
         /// </summary>
-        /// <param name="entity">The entity containing event data.</param>
-        /// <returns>A new Event model or null if the input is null.</returns>
+        /// <param name="entity">The entity containing ticket data.</param>
+        /// <returns>A new Ticket model or null if the input is null.</returns>
         public static Ticket? Create(TicketEntity entity)
         {
             if (entity == null)
@@ -37,13 +34,11 @@ namespace TicketProvider.Business.Factories
             return new Ticket
             {
                 Id = entity.Id,
-                EventId = entity.Name,
-                Description = entity.Description,
-                StartDate = entity.StartDate,
-                EndDate = entity.EndDate,
-                Location = entity.Location,
-                TicketPrice = entity.TicketPrice,
-                TicketAmount = entity.TicketAmount
+                EventId = entity.EventId,
+                HolderName = entity.HolderName,
+                HolderEmail = entity.HolderEmail,
+                PurchaseDate = entity.PurchaseDate,
+                Price = entity.Price,
             };
         }
     }
