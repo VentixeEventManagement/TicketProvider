@@ -9,13 +9,13 @@ namespace TicketProvider.Data.Repositories
     /// <summary>
     /// Provides data access methods specific to event entities, using Entity Framework Core.
     /// </summary>
-    public class EventRepository : BaseRepository<EventEntity>, IEventRepository
+    public class TicketRepository : BaseRepository<EventEntity>, ITicketRepositoryRepository
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="EventRepository"/> class with the specified data context.
+        /// Initializes a new instance of the <see cref="TicketRepository"/> class with the specified data context.
         /// </summary>
         /// <param name="context">The database context to use for event data operations.</param>
-        public EventRepository(DataContext context) : base(context)
+        public TicketRepository(TicketContext context) : base(context)
         {
         }
 

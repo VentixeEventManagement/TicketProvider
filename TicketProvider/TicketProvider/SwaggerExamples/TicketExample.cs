@@ -7,7 +7,7 @@ namespace TicketProvider.SwaggerExamples
     /// <summary>
     /// Provides a sample <see cref="Event"/> instance for Swagger documentation.
     /// </summary>
-    public class EventExample : IExamplesProvider<Event>
+    public class TicketExample : IExamplesProvider<Event>
     {
         /// <summary>
         /// Returns an example <see cref="Event"/> object with realistic sample data.

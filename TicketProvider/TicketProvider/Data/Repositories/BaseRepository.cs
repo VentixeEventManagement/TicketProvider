@@ -15,7 +15,7 @@ namespace TicketProvider.Data.Repositories
         /// <summary>
         /// The database context used for data operations.
         /// </summary>
-        protected readonly DataContext _context;
+        protected readonly TicketContext _context;
 
         /// <summary>
         /// The DbSet representing the collection of entities in the context.
@@ -26,7 +26,7 @@ namespace TicketProvider.Data.Repositories
         /// Initializes a new instance of the <see cref="BaseRepository{TEntity}"/> class.
         /// </summary>
         /// <param name="context">The database context to use.</param>
-        public BaseRepository(DataContext context)
+        public BaseRepository(TicketContext context)
         {
             _context = context;
             _db = context.Set<TEntity>();

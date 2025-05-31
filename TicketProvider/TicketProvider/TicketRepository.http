@@ -1,6 +1,6 @@
 @EventProvider_HostAddress = http://localhost:5240
 
-GET {{EventProvider_HostAddress}}/weatherforecast/
+GET {{TicketProvider_HostAddress}}/weatherforecast/
 Accept: application/json
 
 ###

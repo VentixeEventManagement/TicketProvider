@@ -10,7 +10,7 @@ using TicketProvider.Data.Contexts;
 
 namespace TicketProvider.Migrations
 {
-    [DbContext(typeof(DataContext))]
+    [DbContext(typeof(TicketContext))]
     partial class DataContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)

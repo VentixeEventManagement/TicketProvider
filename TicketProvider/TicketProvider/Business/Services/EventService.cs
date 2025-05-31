@@ -12,13 +12,13 @@ namespace TicketProvider.Business.Services
     /// </summary>
     public class EventService : IEventService
     {
-        private readonly IEventRepository _eventRepository;
+        private readonly ITicketRepositoryRepository _eventRepository;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="EventService"/> class.
         /// </summary>
         /// <param name="eventRepository">The repository used to access event data.</param>
-        public EventService(IEventRepository eventRepository)
+        public EventService(ITicketRepositoryRepository eventRepository)
         {
             _eventRepository = eventRepository;
         }

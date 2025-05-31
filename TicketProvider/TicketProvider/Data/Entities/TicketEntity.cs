@@ -3,7 +3,7 @@
     /// <summary>
     /// Represents the event entity used for database storage.
     /// </summary>
-    public class EventEntity
+    public class TicketEntity
     {
         /// <summary>
         /// The unique identifier for the event.

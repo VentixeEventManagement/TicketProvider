@@ -36,7 +36,7 @@ namespace TicketProvider.Controllers
         /// <returns>A list of all events.</returns>
         [HttpGet]
         [SwaggerResponse(StatusCodes.Status200OK, "A list of all events.", typeof(IEnumerable<Event>))]
-        [SwaggerResponseExample(StatusCodes.Status200OK, typeof(EventExample))]
+        [SwaggerResponseExample(StatusCodes.Status200OK, typeof(TicketExample))]
         [SwaggerResponse(StatusCodes.Status500InternalServerError, "A server or database error occurred while retrieving events. This may be due to a database outage, data corruption, or an unhandled exception.")]
         public async Task<IActionResult> GetEvents()
         {

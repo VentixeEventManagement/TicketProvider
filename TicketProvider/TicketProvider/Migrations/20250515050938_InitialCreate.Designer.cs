@@ -11,7 +11,7 @@ using TicketProvider.Data.Contexts;
 
 namespace TicketProvider.Migrations
 {
-    [DbContext(typeof(DataContext))]
+    [DbContext(typeof(TicketContext))]
     [Migration("20250515050938_InitialCreate")]
     partial class InitialCreate
     {

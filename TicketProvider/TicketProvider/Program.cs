@@ -10,10 +10,10 @@ using TicketProvider.SwaggerExamples;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
-builder.Services.AddDbContext<DataContext>(options =>
+builder.Services.AddDbContext<TicketContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerExamplesFromAssemblyOf<EventExample>();
+builder.Services.AddSwaggerExamplesFromAssemblyOf<TicketExample>();
 
 // AI-generated code: Swagger XML comments configuration
 var xmlFile = $"{System.Reflection.Assembly.GetExecutingAssembly().GetName().Name}.xml";
@@ -27,32 +27,14 @@ builder.Services.AddSwaggerGen(options =>
         Version = "v1",
         Description = @"TicketProvider Microservice
 
-This microservice provides a RESTful API for event management, allowing clients to create, 
-read, update, and delete event information. It follows a layered architecture pattern with
-clear separation of concerns:
-
-Architecture Overview:
-- Controllers: Handle HTTP requests and responses (API endpoints)
-- Business Layer: Contains business logic, services, and domain models
-- Data Access Layer: Manages data persistence through repositories and entities
-
-Key Components:
-- EventController: Exposes REST endpoints for event CRUD operations
-- EventService: Implements business logic for event management
-- EventRepository: Handles data access operations for events
-- Event: Domain model representing an event in the system
-
-The API is documented using Swagger/OpenAPI, accessible at the root URL.
-Data is persisted using Entity Framework Core with SQL Server.
-
-For more details on available endpoints and data models, refer to the Swagger UI."
+This microservice provides a RESTful API for Ticket Management"
     });
 
     options.IncludeXmlComments(xmlPath);
     options.EnableAnnotations();
 });
 
-builder.Services.AddScoped<IEventRepository, EventRepository>();
+builder.Services.AddScoped<ITicketRepositoryRepository, TicketRepository>();
 builder.Services.AddScoped<IEventService, EventService>();
 
 builder.Services.AddCors(options =>
