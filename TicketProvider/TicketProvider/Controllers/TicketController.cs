@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
+﻿using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
 using Swashbuckle.AspNetCore.Filters;
 using TicketProvider.Business.Interfaces;
@@ -10,168 +8,168 @@ using TicketProvider.SwaggerExamples;
 namespace TicketProvider.Controllers
 {
     /// <summary>
-    /// Handles API requests related to event management, such as retrieving, creating, updating, and deleting events.
+    /// Handles API requests related to ticket management, such as retrieving, creating, updating, and deleting tickets.
     /// </summary>
     [Route("api/[controller]")]
     [ApiController]
     public class TicketController : ControllerBase
     {
-        private readonly ITicketService _eventService;
+        private readonly ITicketService _ticketService;
         private readonly ILogger<TicketController> _logger;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="TicketController"/> class.
         /// </summary>
-        /// <param name="eventService">The service for event business logic.</param>
+        /// <param name="ticketService">The service for ticket business logic.</param>
         /// <param name="logger">The logger instance for logging errors and information.</param>
-        public TicketController(ITicketService eventService, ILogger<TicketController> logger)
+        public TicketController(ITicketService ticketService, ILogger<TicketController> logger)
         {
-            _eventService = eventService;
+            _ticketService = ticketService;
             _logger = logger;
         }
 
         /// <summary>
-        /// Retrieves all events from the system.
+        /// Retrieves all tickets from the system.
         /// </summary>
-        /// <returns>A list of all events.</returns>
+        /// <returns>A list of all tickets.</returns>
         [HttpGet]
-        [SwaggerResponse(StatusCodes.Status200OK, "A list of all events.", typeof(IEnumerable<Ticket>))]
+        [SwaggerResponse(StatusCodes.Status200OK, "A list of all tickets.", typeof(IEnumerable<Ticket>))]
         [SwaggerResponseExample(StatusCodes.Status200OK, typeof(TicketExample))]
-        [SwaggerResponse(StatusCodes.Status500InternalServerError, "A server or database error occurred while retrieving events. This may be due to a database outage, data corruption, or an unhandled exception.")]
-        public async Task<IActionResult> GetEvents()
+        [SwaggerResponse(StatusCodes.Status500InternalServerError, "A server or database error occurred while retrieving tickets.")]
+        public async Task<IActionResult> GetTickets()
         {
             try
             {
-                var events = await _eventService.GetEventsAsync();
-                return Ok(events);
+                var tickets = await _ticketService.GetTicketsAsync();
+                return Ok(tickets);
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "An unexpected error occurred while retrieving events.");
-                return StatusCode(StatusCodes.Status500InternalServerError, "An unexpected error occurred while retrieving events. Please try again later.");
+                _logger.LogError(ex, "An unexpected error occurred while retrieving tickets.");
+                return StatusCode(StatusCodes.Status500InternalServerError, "An unexpected error occurred while retrieving tickets. Please try again later.");
             }
         }
 
         /// <summary>
-        /// Retrieves a specific event by its unique identifier.
+        /// Retrieves a specific ticket by its unique identifier.
         /// </summary>
-        /// <param name="id">The unique identifier of the event.</param>
-        /// <returns>The event if found; otherwise, an error response.</returns>
+        /// <param name="id">The unique identifier of the ticket.</param>
+        /// <returns>The ticket if found; otherwise, an error response.</returns>
         [HttpGet("{id}")]
-        [SwaggerResponse(StatusCodes.Status200OK, "The event was found.", typeof(Ticket))]
-        [SwaggerResponse(StatusCodes.Status400BadRequest, "The event ID provided is invalid. It must be a positive integer.")]
-        [SwaggerResponse(StatusCodes.Status404NotFound, "No event was found with the specified ID.")]
-        [SwaggerResponse(StatusCodes.Status500InternalServerError, "A server or database error occurred while retrieving the event.")]
-        public async Task<IActionResult> GetEventById(int id)
+        [SwaggerResponse(StatusCodes.Status200OK, "The ticket was found.", typeof(Ticket))]
+        [SwaggerResponse(StatusCodes.Status400BadRequest, "The ticket ID provided is invalid. It must be a positive integer.")]
+        [SwaggerResponse(StatusCodes.Status404NotFound, "No ticket was found with the specified ID.")]
+        [SwaggerResponse(StatusCodes.Status500InternalServerError, "A server or database error occurred while retrieving the ticket.")]
+        public async Task<IActionResult> GetTicketById(int id)
         {
             if (id <= 0)
-                return BadRequest("The event ID must be a positive integer.");
+                return BadRequest("The ticket ID must be a positive integer.");
 
             try
             {
-                var eventobj = await _eventService.GetEventByIdAsync(id);
-                if (eventobj == null)
+                var ticket = await _ticketService.GetTicketByIdAsync(id);
+                if (ticket == null)
                 {
-                    return NotFound($"No event found with ID {id}.");
+                    return NotFound($"No ticket found with ID {id}.");
                 }
-                return Ok(eventobj);
+                return Ok(ticket);
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "An unexpected error occurred while retrieving the event with ID {EventId}.", id);
-                return StatusCode(StatusCodes.Status500InternalServerError, "An unexpected error occurred while retrieving the event. Please try again later.");
+                _logger.LogError(ex, "An unexpected error occurred while retrieving the ticket with ID {TicketId}.", id);
+                return StatusCode(StatusCodes.Status500InternalServerError, "An unexpected error occurred while retrieving the ticket. Please try again later.");
             }
         }
 
         /// <summary>
-        /// Creates a new event.
+        /// Creates a new ticket.
         /// </summary>
-        /// <param name="form">The event registration data.</param>
+        /// <param name="form">The ticket registration data.</param>
         /// <returns>Created if successful; otherwise, an error response.</returns>
         [HttpPost]
-        [SwaggerResponse(StatusCodes.Status201Created, "The event was successfully created.")]
-        [SwaggerResponse(StatusCodes.Status400BadRequest, "The event data provided is invalid.")]
-        [SwaggerResponse(StatusCodes.Status500InternalServerError, "A server or database error occurred while creating the event.")]
+        [SwaggerResponse(StatusCodes.Status201Created, "The ticket was successfully created.")]
+        [SwaggerResponse(StatusCodes.Status400BadRequest, "The ticket data provided is invalid.")]
+        [SwaggerResponse(StatusCodes.Status500InternalServerError, "A server or database error occurred while creating the ticket.")]
         public async Task<IActionResult> Create(TicketRegistrationModel form)
         {
             if (!ModelState.IsValid)
-                return BadRequest("The event data provided is invalid.");
+                return BadRequest("The ticket data provided is invalid.");
 
             try
             {
-                var result = await _eventService.CreateEventAsync(form);
+                var result = await _ticketService.CreateTicketAsync(form);
                 if (result)
                     return Created("", null);
-                _logger.LogWarning("Failed to create the event due to a server error. Data: {@EventData}", form);
-                return StatusCode(StatusCodes.Status500InternalServerError, "Failed to create the event due to a server error.");
+                _logger.LogWarning("Failed to create the ticket due to a server error. Data: {@TicketData}", form);
+                return StatusCode(StatusCodes.Status500InternalServerError, "Failed to create the ticket due to a server error.");
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "An unexpected error occurred while creating the event. Data: {@EventData}", form);
-                return StatusCode(StatusCodes.Status500InternalServerError, "An unexpected error occurred while creating the event. Please try again later.");
+                _logger.LogError(ex, "An unexpected error occurred while creating the ticket. Data: {@TicketData}", form);
+                return StatusCode(StatusCodes.Status500InternalServerError, "An unexpected error occurred while creating the ticket. Please try again later.");
             }
         }
 
         /// <summary>
-        /// Updates an existing event.
+        /// Updates an existing ticket.
         /// </summary>
-        /// <param name="id">The unique identifier of the event to update.</param>
-        /// <param name="form">The updated event data.</param>
+        /// <param name="id">The unique identifier of the ticket to update.</param>
+        /// <param name="form">The updated ticket data.</param>
         /// <returns>Ok if updated; otherwise, an error response.</returns>
         [HttpPut("{id}")]
-        [SwaggerResponse(StatusCodes.Status200OK, "The event was successfully updated.")]
-        [SwaggerResponse(StatusCodes.Status400BadRequest, "The event ID or data provided is invalid.")]
-        [SwaggerResponse(StatusCodes.Status404NotFound, "No event was found with the specified ID.")]
-        [SwaggerResponse(StatusCodes.Status500InternalServerError, "A server or database error occurred while updating the event.")]
-        public async Task<IActionResult> EditProject(int id, TicketRegistrationModel form)
+        [SwaggerResponse(StatusCodes.Status200OK, "The ticket was successfully updated.")]
+        [SwaggerResponse(StatusCodes.Status400BadRequest, "The ticket ID or data provided is invalid.")]
+        [SwaggerResponse(StatusCodes.Status404NotFound, "No ticket was found with the specified ID.")]
+        [SwaggerResponse(StatusCodes.Status500InternalServerError, "A server or database error occurred while updating the ticket.")]
+        public async Task<IActionResult> EditTicket(int id, TicketRegistrationModel form)
         {
             if (id <= 0)
-                return BadRequest("The event ID must be a positive integer.");
+                return BadRequest("The ticket ID must be a positive integer.");
             if (!ModelState.IsValid)
-                return BadRequest("The event data provided is invalid.");
+                return BadRequest("The ticket data provided is invalid.");
 
             try
             {
-                var result = await _eventService.EditEventAsync(id, form);
+                var result = await _ticketService.EditTicketAsync(id, form);
                 if (result)
-                    return Ok("Event was updated successfully.");
-                _logger.LogWarning("No event found to update with ID {EventId}. Data: {@EventData}", id, form);
-                return NotFound($"No event found with ID {id}.");
+                    return Ok("Ticket was updated successfully.");
+                _logger.LogWarning("No ticket found to update with ID {TicketId}. Data: {@TicketData}", id, form);
+                return NotFound($"No ticket found with ID {id}.");
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "An unexpected error occurred while updating the event with ID {EventId}. Data: {@EventData}", id, form);
-                return StatusCode(StatusCodes.Status500InternalServerError, "An unexpected error occurred while updating the event. Please try again later.");
+                _logger.LogError(ex, "An unexpected error occurred while updating the ticket with ID {TicketId}. Data: {@TicketData}", id, form);
+                return StatusCode(StatusCodes.Status500InternalServerError, "An unexpected error occurred while updating the ticket. Please try again later.");
             }
         }
 
         /// <summary>
-        /// Deletes an event by its unique identifier.
+        /// Deletes a ticket by its unique identifier.
         /// </summary>
-        /// <param name="id">The unique identifier of the event to delete.</param>
+        /// <param name="id">The unique identifier of the ticket to delete.</param>
         /// <returns>Ok if deleted; otherwise, an error response.</returns>
         [HttpDelete("{id}")]
-        [SwaggerResponse(StatusCodes.Status200OK, "The event was successfully deleted.")]
-        [SwaggerResponse(StatusCodes.Status400BadRequest, "The event ID provided is invalid.")]
-        [SwaggerResponse(StatusCodes.Status404NotFound, "No event was found with the specified ID.")]
-        [SwaggerResponse(StatusCodes.Status500InternalServerError, "A server or database error occurred while deleting the event.")]
-        public async Task<IActionResult> DeleteEvent(int id)
+        [SwaggerResponse(StatusCodes.Status200OK, "The ticket was successfully deleted.")]
+        [SwaggerResponse(StatusCodes.Status400BadRequest, "The ticket ID provided is invalid.")]
+        [SwaggerResponse(StatusCodes.Status404NotFound, "No ticket was found with the specified ID.")]
+        [SwaggerResponse(StatusCodes.Status500InternalServerError, "A server or database error occurred while deleting the ticket.")]
+        public async Task<IActionResult> DeleteTicket(int id)
         {
             if (id <= 0)
-                return BadRequest("The event ID must be a positive integer.");
+                return BadRequest("The ticket ID must be a positive integer.");
 
             try
             {
-                var result = await _eventService.DeleteEventAsync(id);
+                var result = await _ticketService.DeleteTicketAsync(id);
                 if (result)
-                    return Ok("Event was deleted successfully.");
-                _logger.LogWarning("No event found to delete with ID {EventId}.", id);
-                return NotFound($"No event found with ID {id}.");
+                    return Ok("Ticket was deleted successfully.");
+                _logger.LogWarning("No ticket found to delete with ID {TicketId}.", id);
+                return NotFound($"No ticket found with ID {id}.");
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "An unexpected error occurred while deleting the event with ID {EventId}.", id);
-                return StatusCode(StatusCodes.Status500InternalServerError, "An unexpected error occurred while deleting the event. Please try again later.");
+                _logger.LogError(ex, "An unexpected error occurred while deleting the ticket with ID {TicketId}.", id);
+                return StatusCode(StatusCodes.Status500InternalServerError, "An unexpected error occurred while deleting the ticket. Please try again later.");
             }
         }
     }
