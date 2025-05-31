@@ -1,48 +1,43 @@
 ﻿namespace TicketProvider.Business.Models
 {
     /// <summary>
-    /// Represents an event in the system.
+    /// Represents a ticket for an event.
     /// </summary>
     public class Ticket
     {
         /// <summary>
-        /// The unique identifier for the event.
+        /// The unique identifier for the ticket.
         /// </summary>
         public int Id { get; set; }
 
         /// <summary>
-        /// The name of the event.
+        /// The event this ticket is for.
         /// </summary>
-        public string Name { get; set; } = null!;
+        public int EventId { get; set; }
 
         /// <summary>
-        /// A description of the event.
+        /// The name of the ticket holder.
         /// </summary>
-        public string Description { get; set; } = null!;
+        public string? HolderName { get; set; }
 
         /// <summary>
-        /// The start date and time of the event.
+        /// The email of the ticket holder.
         /// </summary>
-        public DateTime StartDate { get; set; }
+        public string? HolderEmail { get; set; }
 
         /// <summary>
-        /// The end date and time of the event.
+        /// The date and time the ticket was purchased.
         /// </summary>
-        public DateTime EndDate { get; set; }
+        public DateTime? PurchaseDate { get; set; }
 
         /// <summary>
-        /// The location where the event takes place.
+        /// The price paid for the ticket, including any applicable taxes or discounts.
         /// </summary>
-        public string Location { get; set; } = null!;
+        public decimal Price { get; set; }
 
         /// <summary>
-        /// The price of a ticket for the event.
+        /// The status of the ticket (e.g., Available, Sold, Cancelled).
         /// </summary>
-        public int TicketPrice { get; set; }
-
-        /// <summary>
-        /// The number of tickets available for the event.
-        /// </summary>
-        public string TicketAmount { get; set; } = null!;
+        public string Status { get; set; } = "Available";
     }
 }

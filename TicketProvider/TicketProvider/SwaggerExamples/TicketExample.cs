@@ -20,7 +20,7 @@ namespace TicketProvider.SwaggerExamples
             return new Ticket
             {
                 Id = 1,
-                Name = "comicon",
+                EventId = "comicon",
                 Description = "Annual comic and pop culture convention.",
                 StartDate = DateTime.Parse("2025-05-28T12:12:03.663Z"),
                 EndDate = DateTime.Parse("2025-05-29T18:00:00.000Z"),

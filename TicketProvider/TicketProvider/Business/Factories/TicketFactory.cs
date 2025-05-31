@@ -37,7 +37,7 @@ namespace TicketProvider.Business.Factories
             return new Ticket
             {
                 Id = entity.Id,
-                Name = entity.Name,
+                EventId = entity.Name,
                 Description = entity.Description,
                 StartDate = entity.StartDate,
                 EndDate = entity.EndDate,

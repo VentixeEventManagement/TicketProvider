@@ -1,43 +1,28 @@
 ﻿namespace TicketProvider.Business.Models
 {
     /// <summary>
-    /// Represents the data required to register or create a new event.
+    /// Represents the data required to register (purchase) a ticket for an event.
     /// </summary>
     public class TicketRegistrationModel
     {
         /// <summary>
-        /// The name of the event.
+        /// The event this ticket is for.
         /// </summary>
-        public string Name { get; set; } = null!;
+        public int EventId { get; set; }
 
         /// <summary>
-        /// A description of the event.
+        /// The name of the ticket holder.
         /// </summary>
-        public string Description { get; set; } = null!;
+        public string HolderName { get; set; } = null!;
 
         /// <summary>
-        /// The start date and time of the event.
+        /// The email of the ticket holder.
         /// </summary>
-        public DateTime StartDate { get; set; }
+        public string HolderEmail { get; set; } = null!;
 
         /// <summary>
-        /// The end date and time of the event.
+        /// The price paid for the ticket, if applicable.
         /// </summary>
-        public DateTime EndDate { get; set; }
-
-        /// <summary>
-        /// The location where the event will take place.
-        /// </summary>
-        public string Location { get; set; } = null!;
-
-        /// <summary>
-        /// The price of a ticket for the event.
-        /// </summary>
-        public int TicketPrice { get; set; }
-
-        /// <summary>
-        /// The number of tickets available for the event.
-        /// </summary>
-        public string TicketAmount { get; set; } = null!;
+        public decimal? Price { get; set; }
     }
 }
