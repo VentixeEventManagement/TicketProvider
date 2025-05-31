@@ -5,7 +5,7 @@ namespace TicketProvider.Business.Interfaces
     /// <summary>
     /// Defines methods for managing events in the system.
     /// </summary>
-    public interface IEventService
+    public interface ITicketService
     {
         /// <summary>
         /// Creates a new event using the provided registration data.
@@ -14,7 +14,7 @@ namespace TicketProvider.Business.Interfaces
         /// <returns>
         /// A task that represents the asynchronous operation. The task result contains true if the event was created successfully; otherwise, false.
         /// </returns>
-        Task<bool> CreateEventAsync(EventRegistrationModel eventData);
+        Task<bool> CreateEventAsync(TicketRegistrationModel eventData);
 
         /// <summary>
         /// Deletes an event with the specified unique identifier.
@@ -33,7 +33,7 @@ namespace TicketProvider.Business.Interfaces
         /// <returns>
         /// A task that represents the asynchronous operation. The task result contains true if the event was updated successfully; otherwise, false.
         /// </returns>
-        Task<bool> EditEventAsync(int eventId, EventRegistrationModel newEventData);
+        Task<bool> EditEventAsync(int eventId, TicketRegistrationModel newEventData);
 
         /// <summary>
         /// Retrieves a specific event by its unique identifier.
@@ -42,7 +42,7 @@ namespace TicketProvider.Business.Interfaces
         /// <returns>
         /// A task that represents the asynchronous operation. The task result contains the event if found; otherwise, null.
         /// </returns>
-        Task<Event?> GetEventByIdAsync(int eventId);
+        Task<Ticket?> GetEventByIdAsync(int eventId);
 
         /// <summary>
         /// Retrieves all events in the system.
@@ -50,6 +50,6 @@ namespace TicketProvider.Business.Interfaces
         /// <returns>
         /// A task that represents the asynchronous operation. The task result contains a collection of all events.
         /// </returns>
-        Task<IEnumerable<Event>> GetEventsAsync();
+        Task<IEnumerable<Ticket>> GetEventsAsync();
     }
 }

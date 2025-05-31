@@ -34,8 +34,8 @@ This microservice provides a RESTful API for Ticket Management"
     options.EnableAnnotations();
 });
 
-builder.Services.AddScoped<ITicketRepositoryRepository, TicketRepository>();
-builder.Services.AddScoped<IEventService, EventService>();
+builder.Services.AddScoped<ITicketRepository, TicketRepository>();
+builder.Services.AddScoped<ITicketService, TicketService>();
 
 builder.Services.AddCors(options =>
 {

@@ -3,7 +3,7 @@
     /// <summary>
     /// Represents an event in the system.
     /// </summary>
-    public class Event
+    public class Ticket
     {
         /// <summary>
         /// The unique identifier for the event.

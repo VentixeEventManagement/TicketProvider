@@ -4,10 +4,10 @@ using TicketProvider.Data.Entities;
 namespace TicketProvider.Data.Interfaces
 {
     /// <summary>
-    /// Provides data access methods specific to <see cref="EventEntity"/> objects.
+    /// Provides data access methods specific to <see cref="TicketEntity"/> objects.
     /// Inherits basic CRUD operations from <see cref="IBaseRepository{EventEntity}"/>.
     /// </summary>
-    public interface ITicketRepositoryRepository : IBaseRepository<EventEntity>
+    public interface ITicketRepository : IBaseRepository<TicketEntity>
     {
         // Add event-specific data access methods here if needed in the future.
     }

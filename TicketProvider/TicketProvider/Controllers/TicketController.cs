@@ -14,17 +14,17 @@ namespace TicketProvider.Controllers
     /// </summary>
     [Route("api/[controller]")]
     [ApiController]
-    public class EventController : ControllerBase
+    public class TicketController : ControllerBase
     {
-        private readonly IEventService _eventService;
-        private readonly ILogger<EventController> _logger;
+        private readonly ITicketService _eventService;
+        private readonly ILogger<TicketController> _logger;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="EventController"/> class.
+        /// Initializes a new instance of the <see cref="TicketController"/> class.
         /// </summary>
         /// <param name="eventService">The service for event business logic.</param>
         /// <param name="logger">The logger instance for logging errors and information.</param>
-        public EventController(IEventService eventService, ILogger<EventController> logger)
+        public TicketController(ITicketService eventService, ILogger<TicketController> logger)
         {
             _eventService = eventService;
             _logger = logger;
@@ -35,7 +35,7 @@ namespace TicketProvider.Controllers
         /// </summary>
         /// <returns>A list of all events.</returns>
         [HttpGet]
-        [SwaggerResponse(StatusCodes.Status200OK, "A list of all events.", typeof(IEnumerable<Event>))]
+        [SwaggerResponse(StatusCodes.Status200OK, "A list of all events.", typeof(IEnumerable<Ticket>))]
         [SwaggerResponseExample(StatusCodes.Status200OK, typeof(TicketExample))]
         [SwaggerResponse(StatusCodes.Status500InternalServerError, "A server or database error occurred while retrieving events. This may be due to a database outage, data corruption, or an unhandled exception.")]
         public async Task<IActionResult> GetEvents()
@@ -58,7 +58,7 @@ namespace TicketProvider.Controllers
         /// <param name="id">The unique identifier of the event.</param>
         /// <returns>The event if found; otherwise, an error response.</returns>
         [HttpGet("{id}")]
-        [SwaggerResponse(StatusCodes.Status200OK, "The event was found.", typeof(Event))]
+        [SwaggerResponse(StatusCodes.Status200OK, "The event was found.", typeof(Ticket))]
         [SwaggerResponse(StatusCodes.Status400BadRequest, "The event ID provided is invalid. It must be a positive integer.")]
         [SwaggerResponse(StatusCodes.Status404NotFound, "No event was found with the specified ID.")]
         [SwaggerResponse(StatusCodes.Status500InternalServerError, "A server or database error occurred while retrieving the event.")]
@@ -92,7 +92,7 @@ namespace TicketProvider.Controllers
         [SwaggerResponse(StatusCodes.Status201Created, "The event was successfully created.")]
         [SwaggerResponse(StatusCodes.Status400BadRequest, "The event data provided is invalid.")]
         [SwaggerResponse(StatusCodes.Status500InternalServerError, "A server or database error occurred while creating the event.")]
-        public async Task<IActionResult> Create(EventRegistrationModel form)
+        public async Task<IActionResult> Create(TicketRegistrationModel form)
         {
             if (!ModelState.IsValid)
                 return BadRequest("The event data provided is invalid.");
@@ -123,7 +123,7 @@ namespace TicketProvider.Controllers
         [SwaggerResponse(StatusCodes.Status400BadRequest, "The event ID or data provided is invalid.")]
         [SwaggerResponse(StatusCodes.Status404NotFound, "No event was found with the specified ID.")]
         [SwaggerResponse(StatusCodes.Status500InternalServerError, "A server or database error occurred while updating the event.")]
-        public async Task<IActionResult> EditProject(int id, EventRegistrationModel form)
+        public async Task<IActionResult> EditProject(int id, TicketRegistrationModel form)
         {
             if (id <= 0)
                 return BadRequest("The event ID must be a positive integer.");

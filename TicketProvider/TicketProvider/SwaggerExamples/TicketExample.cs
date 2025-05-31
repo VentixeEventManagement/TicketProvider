@@ -5,19 +5,19 @@ using TicketProvider.Business.Models;
 namespace TicketProvider.SwaggerExamples
 {
     /// <summary>
-    /// Provides a sample <see cref="Event"/> instance for Swagger documentation.
+    /// Provides a sample <see cref="Ticket"/> instance for Swagger documentation.
     /// </summary>
-    public class TicketExample : IExamplesProvider<Event>
+    public class TicketExample : IExamplesProvider<Ticket>
     {
         /// <summary>
-        /// Returns an example <see cref="Event"/> object with realistic sample data.
+        /// Returns an example <see cref="Ticket"/> object with realistic sample data.
         /// </summary>
         /// <returns>
-        /// An <see cref="Event"/> instance representing a typical event, used for Swagger UI examples.
+        /// An <see cref="Ticket"/> instance representing a typical event, used for Swagger UI examples.
         /// </returns>
-        public Event GetExamples()
+        public Ticket GetExamples()
         {
-            return new Event
+            return new Ticket
             {
                 Id = 1,
                 Name = "comicon",

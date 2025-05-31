@@ -6,14 +6,14 @@ namespace TicketProvider.Business.Factories
     /// <summary>
     /// Provides factory methods for creating Event and EventEntity objects.
     /// </summary>
-    public static class EventFactory
+    public static class TicketFactory
     {
         /// <summary>
         /// Creates an EventEntity from an EventRegistrationModel.
         /// </summary>
         /// <param name="form">The registration model containing event data.</param>
         /// <returns>A new EventEntity or null if the input is null.</returns>
-        public static EventEntity? Create(EventRegistrationModel form) => form == null ? null : new()
+        public static TicketEntity? Create(TicketRegistrationModel form) => form == null ? null : new()
         {
             Name = form.Name,
             Description = form.Description,
@@ -29,12 +29,12 @@ namespace TicketProvider.Business.Factories
         /// </summary>
         /// <param name="entity">The entity containing event data.</param>
         /// <returns>A new Event model or null if the input is null.</returns>
-        public static Event? Create(EventEntity entity)
+        public static Ticket? Create(TicketEntity entity)
         {
             if (entity == null)
                 return null;
 
-            return new Event
+            return new Ticket
             {
                 Id = entity.Id,
                 Name = entity.Name,

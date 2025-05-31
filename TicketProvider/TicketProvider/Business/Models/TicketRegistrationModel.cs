@@ -3,7 +3,7 @@
     /// <summary>
     /// Represents the data required to register or create a new event.
     /// </summary>
-    public class EventRegistrationModel
+    public class TicketRegistrationModel
     {
         /// <summary>
         /// The name of the event.

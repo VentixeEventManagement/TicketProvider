@@ -9,7 +9,7 @@ namespace TicketProvider.Data.Repositories
     /// <summary>
     /// Provides data access methods specific to event entities, using Entity Framework Core.
     /// </summary>
-    public class TicketRepository : BaseRepository<EventEntity>, ITicketRepositoryRepository
+    public class TicketRepository : BaseRepository<TicketEntity>, ITicketRepository
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="TicketRepository"/> class with the specified data context.
@@ -25,7 +25,7 @@ namespace TicketProvider.Data.Repositories
         /// <returns>
         /// A task that represents the asynchronous operation. The task result contains a collection of all event entities.
         /// </returns>
-        public override async Task<IEnumerable<EventEntity>> GetAllAsync()
+        public override async Task<IEnumerable<TicketEntity>> GetAllAsync()
         {
             var entities = await _db.ToListAsync();
             return entities;
@@ -38,7 +38,7 @@ namespace TicketProvider.Data.Repositories
         /// <returns>
         /// A task that represents the asynchronous operation. The task result contains the event entity if found; otherwise, null.
         /// </returns>
-        public override async Task<EventEntity?> GetAsync(Expression<Func<EventEntity, bool>> expression)
+        public override async Task<TicketEntity?> GetAsync(Expression<Func<TicketEntity, bool>> expression)
         {
             var entity = await _db.FirstOrDefaultAsync(expression);
             return entity;

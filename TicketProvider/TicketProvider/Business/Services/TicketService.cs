@@ -10,15 +10,15 @@ namespace TicketProvider.Business.Services
     /// <summary>
     /// Provides business logic for managing events, including creating, retrieving, updating, and deleting events.
     /// </summary>
-    public class EventService : IEventService
+    public class TicketService : ITicketService
     {
-        private readonly ITicketRepositoryRepository _eventRepository;
+        private readonly ITicketRepository _eventRepository;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="EventService"/> class.
+        /// Initializes a new instance of the <see cref="TicketService"/> class.
         /// </summary>
         /// <param name="eventRepository">The repository used to access event data.</param>
-        public EventService(ITicketRepositoryRepository eventRepository)
+        public TicketService(ITicketRepository eventRepository)
         {
             _eventRepository = eventRepository;
         }
@@ -29,10 +29,10 @@ namespace TicketProvider.Business.Services
         /// <returns>
         /// A task that represents the asynchronous operation. The task result contains a collection of all events.
         /// </returns>
-        public async Task<IEnumerable<Event>> GetEventsAsync()
+        public async Task<IEnumerable<Ticket>> GetEventsAsync()
         {
             var entities = await _eventRepository.GetAllAsync();
-            var events = entities.Select(EventFactory.Create);
+            var events = entities.Select(TicketFactory.Create);
             return events!;
         }
 
@@ -43,12 +43,12 @@ namespace TicketProvider.Business.Services
         /// <returns>
         /// A task that represents the asynchronous operation. The task result contains the event if found; otherwise, null.
         /// </returns>
-        public async Task<Event?> GetEventByIdAsync(int eventId)
+        public async Task<Ticket?> GetEventByIdAsync(int eventId)
         {
             var eventobj = await _eventRepository.GetAsync(p => p.Id == eventId);
             if (eventobj == null)
                 return null!;
-            return EventFactory.Create(eventobj)!;
+            return TicketFactory.Create(eventobj)!;
         }
 
         /// <summary>
@@ -58,9 +58,9 @@ namespace TicketProvider.Business.Services
         /// <returns>
         /// A task that represents the asynchronous operation. The task result contains true if the event was created successfully; otherwise, false.
         /// </returns>
-        public async Task<bool> CreateEventAsync(EventRegistrationModel eventData)
+        public async Task<bool> CreateEventAsync(TicketRegistrationModel eventData)
         {
-            var eventEntity = EventFactory.Create(eventData);
+            var eventEntity = TicketFactory.Create(eventData);
 
             if (eventEntity == null)
                 return false;
@@ -77,7 +77,7 @@ namespace TicketProvider.Business.Services
         /// <returns>
         /// A task that represents the asynchronous operation. The task result contains true if the event was updated successfully; otherwise, false.
         /// </returns>
-        public async Task<bool> EditEventAsync(int eventId, EventRegistrationModel newEventData)
+        public async Task<bool> EditEventAsync(int eventId, TicketRegistrationModel newEventData)
         {
             var targetEvent = await _eventRepository.GetAsync(e => e.Id == eventId);
             if (targetEvent == null)
