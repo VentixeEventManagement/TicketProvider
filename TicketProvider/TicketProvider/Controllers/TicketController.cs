@@ -81,6 +81,38 @@ namespace TicketProvider.Controllers
             }
         }
 
+
+        /// <summary>
+        /// Retrieves a list of tickets by the event's unique identifier.
+        /// </summary>
+        /// <param name="eventId">The unique identifier of the event.</param>
+        /// <returns>The tickets for the event if found; otherwise, an error response.</returns>
+        [HttpGet("by-event/{eventId}")]
+        [SwaggerResponse(StatusCodes.Status200OK, "A list of tickets for the event.", typeof(IEnumerable<Ticket>))]
+        [SwaggerResponse(StatusCodes.Status400BadRequest, "The event ID provided is invalid. It must be a positive integer.")]
+        [SwaggerResponse(StatusCodes.Status404NotFound, "No tickets were found for the specified event ID.")]
+        [SwaggerResponse(StatusCodes.Status500InternalServerError, "A server or database error occurred while retrieving the tickets.")]
+        public async Task<IActionResult> GetTicketsByEventId(int eventId)
+        {
+            if (eventId <= 0)
+                return BadRequest("The event ID must be a positive integer.");
+
+            try
+            {
+                var tickets = await _ticketService.GetTicketsByEventIdAsync(eventId);
+                if (tickets == null || !tickets.Any())
+                {
+                    return NotFound($"No tickets found for event ID {eventId}.");
+                }
+                return Ok(tickets);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "An unexpected error occurred while retrieving tickets for event ID {EventId}.", eventId);
+                return StatusCode(StatusCodes.Status500InternalServerError, "An unexpected error occurred while retrieving the tickets. Please try again later.");
+            }
+        }
+
         /// <summary>
         /// Creates a new ticket.
         /// </summary>

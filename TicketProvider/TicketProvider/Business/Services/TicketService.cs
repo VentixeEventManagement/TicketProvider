@@ -51,6 +51,19 @@ namespace TicketProvider.Business.Services
         }
 
         /// <summary>
+        /// Retrieves all tickets for a specific event by its unique identifier.
+        /// </summary>
+        /// <param name="eventId">The unique identifier of the event whose tickets are to be retrieved.</param>
+        /// <returns>
+        /// A task that represents the asynchronous operation. The task result contains a collection of tickets for the specified event.
+        /// </returns>
+        public async Task<IEnumerable<Ticket>> GetTicketsByEventIdAsync(int eventId)
+        {
+            var entities = await _ticketRepository.GetAllByEventIdAsync(eventId);
+            return entities.Select(TicketFactory.Create)!;
+        }
+
+        /// <summary>
         /// Creates a new ticket using the provided registration data.
         /// </summary>
         /// <param name="ticketData">The data for the ticket to be created.</param>

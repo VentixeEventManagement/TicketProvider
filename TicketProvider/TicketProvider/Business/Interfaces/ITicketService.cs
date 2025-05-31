@@ -51,5 +51,15 @@ namespace TicketProvider.Business.Interfaces
         /// A task that represents the asynchronous operation. The task result contains a collection of all tickets.
         /// </returns>
         Task<IEnumerable<Ticket>> GetTicketsAsync();
+
+
+        /// <summary>
+        /// Retrieves all tickets for a specific event by its unique identifier.
+        /// </summary>
+        /// <returns>
+        /// A task that represents the asynchronous operation. The task result contains a collection of tickets for the specified event.
+        /// </returns>
+        Task<IEnumerable<Ticket>> GetTicketsByEventIdAsync(int eventId);
+
     }
 }

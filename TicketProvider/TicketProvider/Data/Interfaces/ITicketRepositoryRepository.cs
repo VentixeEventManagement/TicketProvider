@@ -9,6 +9,14 @@ namespace TicketProvider.Data.Interfaces
     /// </summary>
     public interface ITicketRepository : IBaseRepository<TicketEntity>
     {
-        // Add Ticket-specific data access methods here if needed in the future.
+
+        /// <summary>
+        /// Retrieves all ticket entities for a specific event by its unique identifier.
+        /// </summary>
+        /// <param name="eventId">The unique identifier of the event.</param>
+        /// <returns>
+        /// A task that represents the asynchronous operation. The task result contains a collection of ticket entities for the specified event.
+        /// </returns>
+        Task<IEnumerable<TicketEntity>> GetAllByEventIdAsync(int eventId);
     }
 }
