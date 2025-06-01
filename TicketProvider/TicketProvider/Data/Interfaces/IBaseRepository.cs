@@ -1,4 +1,5 @@
-﻿using System.Linq.Expressions;
+﻿// This document was formatted and refined by AI
+using System.Linq.Expressions;
 
 namespace TicketProvider.Data.Interfaces
 {

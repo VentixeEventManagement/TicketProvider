@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿// This document was formatted and refined by AI
+using Microsoft.EntityFrameworkCore;
 using TicketProvider.Data.Entities;
 
 namespace TicketProvider.Data.Contexts

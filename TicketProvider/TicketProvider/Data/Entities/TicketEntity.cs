@@ -1,4 +1,5 @@
-﻿namespace TicketProvider.Data.Entities
+﻿// This document was formatted and refined by AI
+namespace TicketProvider.Data.Entities
 {
     /// <summary>
     /// Represents the ticket entity used for database storage.

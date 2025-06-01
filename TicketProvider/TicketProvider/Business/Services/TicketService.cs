@@ -1,4 +1,5 @@
-﻿using TicketProvider.Business.Factories;
+﻿// This document was formatted and refined by AI
+using TicketProvider.Business.Factories;
 using TicketProvider.Business.Interfaces;
 using TicketProvider.Business.Models;
 using TicketProvider.Data.Entities;

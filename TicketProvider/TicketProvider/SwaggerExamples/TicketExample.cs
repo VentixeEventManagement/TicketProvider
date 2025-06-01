@@ -1,4 +1,5 @@
-﻿using System;
+﻿// This document was formatted and refined by AI
+using System;
 using Swashbuckle.AspNetCore.Filters;
 using TicketProvider.Business.Models;
 

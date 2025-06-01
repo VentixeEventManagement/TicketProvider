@@ -1,4 +1,5 @@
-﻿using TicketProvider.Business.Models;
+﻿// This document was formatted and refined by AI
+using TicketProvider.Business.Models;
 
 namespace TicketProvider.Business.Interfaces
 {

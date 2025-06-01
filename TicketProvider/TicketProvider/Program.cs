@@ -1,3 +1,4 @@
+// This document was formatted and refined by AI
 using Microsoft.EntityFrameworkCore;
 using Swashbuckle.AspNetCore.Filters;
 using TicketProvider.Business.Interfaces;
@@ -10,8 +11,19 @@ using TicketProvider.SwaggerExamples;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
-builder.Services.AddDbContext<TicketContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+if (builder.Environment.IsEnvironment("Testing"))
+{
+    builder.Services.AddDbContext<TicketContext>(options =>
+        options.UseInMemoryDatabase("InMemoryTestDb"));
+}
+else
+{
+    builder.Services.AddDbContext<TicketContext>(options =>
+        options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+}
+
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerExamplesFromAssemblyOf<TicketExample>();
 
@@ -62,3 +74,5 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+
+public partial class Program { }

@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿// This document was formatted and refined by AI
+using System.Diagnostics;
 using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
 using TicketProvider.Data.Contexts;

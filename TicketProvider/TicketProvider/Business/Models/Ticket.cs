@@ -1,4 +1,5 @@
-﻿namespace TicketProvider.Business.Models
+﻿// This document was formatted and refined by AI
+namespace TicketProvider.Business.Models
 {
     /// <summary>
     /// Represents a ticket for an event.
